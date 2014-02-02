@@ -11,17 +11,25 @@ $(function() {
   var day = time(today[1], today[2], today[3]);
 
   $('.content')
-    .before("<nav class='nav'><a class='prev'></a><a class='next'></a></nav>");
+    .before("<nav class='nav'><a id='nav-prev'></a><a id='nav-next'></a></nav>");
   $('.nav')
     .css('height', '2em');
-  $('.nav .prev')
+  $('#nav-prev')
     .attr('href', day.prevYear + '-' + day.prevMonth + '-' + day.prevDate)
     .html(day.prevYear + '年' + day.prevMonth + '月' + day.prevDate + '日')
     .css('float', 'left');
-  $('.nav .next')
+  $('#nav-next')
     .attr('href', day.nextYear + '-' + day.nextMonth + '-' + day.nextDate)
     .html(day.nextYear + '年' + day.nextMonth + '月' + day.nextDate + '日')
     .css('float', 'right');
+
+  $(window).keydown(function (e) {
+    if (e.keyCode === 74) {
+      window.location.href = $('#nav-next').attr('href');
+    } else if (e.keyCode === 75) {
+      window.location.href = $('#nav-prev').attr('href');
+    }
+  });
 
   function time (year, month, date) {
     var todayTime = new Date(year, month - 1, date).getTime();
